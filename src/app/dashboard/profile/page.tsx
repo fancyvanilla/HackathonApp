@@ -11,7 +11,7 @@ export default function Profile() {
     isGuide: true,
     wallet: "0x1234...5678",
     balance: "500 APT",
-    role:"guide"
+    role:"user"
   }
   return (
     user.role === "guide"?<GuideProfile/>:<UserProfile/>

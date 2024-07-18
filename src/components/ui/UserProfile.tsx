@@ -1,8 +1,12 @@
+'use client'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 import { FaWallet, FaMedal, FaUserTie } from 'react-icons/fa'
 import { FaLocationDot } from "react-icons/fa6";
+import {useState} from 'react'
+import { FaQrcode } from 'react-icons/fa';
+
 
 export default function UserProfile() {
 
@@ -29,6 +33,8 @@ export default function UserProfile() {
     { id: 2, name: "City Connoisseur", icon: "🏙️" },
     { id: 3, name: "Cultural Enthusiast", icon: "🏛️" },
   ]
+
+  const [selectedNFT, setSelectedNFT] = useState(null);
 
   return (
     <div className="bg-green-50 min-h-screen">
@@ -85,7 +91,7 @@ export default function UserProfile() {
 
           <div className="md:col-span-2">
             <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-              <h2 className="text-xl font-semibold mb-4 text-black">Booked Experiences</h2>
+              <h2 className="text-xl font-semibold mb-4 text-black">Upcoming Experiences</h2>
               <div className="space-y-4">
                 {bookedExperiences.map((experience) => (
                   <div key={experience.id} className="border rounded-lg p-4 flex justify-between items-center">
@@ -104,16 +110,43 @@ export default function UserProfile() {
             </div>
 
             <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-4 text-black">Achievements</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                {achievements.map((achievement) => (
-                  <div key={achievement.id} className="border rounded-lg p-4 text-center">
-                    <span className="text-3xl mb-2">{achievement.icon}</span>
-                    <h3 className="font-semibold text-gray-700">{achievement.name}</h3>
-                  </div>
-                ))}
+      <h2 className="text-xl font-semibold mb-4 text-black">NFTs</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+        {achievements.map((achievement) => (
+          <div key={achievement.id} className="relative">
+            <Link href={`/nft/${achievement.id}`}>
+              <div className="border rounded-lg p-4 text-center cursor-pointer hover:bg-gray-100 transition-colors">
+                <span className="text-3xl mb-2">{achievement.icon}</span>
+                <h3 className="font-semibold text-gray-700">{achievement.name}</h3>
               </div>
+            </Link>
+            <button 
+              onClick={() => setSelectedNFT(achievement.id)}
+              className="absolute top-2 right-2 bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition-colors"
+            >
+              <FaQrcode />
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {selectedNFT && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg max-w-sm w-full">
+            <p className='text-black'>SCAN</p>
+            <div className="mt-4 flex justify-end space-x-2">
+              <button 
+                onClick={() => setSelectedNFT(null)}
+                className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+              >
+                close
+              </button>
             </div>
+          </div>
+        </div>
+      )}
+    </div>
+
           </div>
         </div>
       </main>

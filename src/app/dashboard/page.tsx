@@ -3,14 +3,16 @@ import { withAuth } from '@/components/authentification/withAuth';
 import Head from 'next/head'
 import Image from 'next/image'
 import Card from '@/components/ui/Card';
-import {useState,useEffect} from 'react'
+import {useState,useEffect,useRef} from 'react'
 import { motion } from 'framer-motion';
 import GuideCard from '@/components/ui/GuideCard';
 import Link from 'next/link'
 import { subscribeToCollection } from '@/lib/firebase/firebaseControllers';
+import { FaUser, FaSignOutAlt } from 'react-icons/fa';
+import { useAuth } from '@/components/authentification/AuthContext';
+
 
 const ProtectedPage = () => {
-
 
 
   useEffect(() => {
@@ -23,9 +25,36 @@ const ProtectedPage = () => {
   }, []);
 
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+
+  const LogOut=async()=>{
+    try{
+
+    await logout();
+    }
+    catch(err) {
+      console.error("Error while logging out",err);
+    }
+  }
+
     const [activeCategory, setActiveCategory] = useState('All')
     const [activeTab, setActiveTab] = useState('Experiences')
     const [experiences, setExperiences] = useState([])
+    const [isOpen, setIsOpen] = useState(false);
+    const menuRef = useRef(null);
+    const {logout} = useAuth()
 
 //TODO: we need to add the attribute category to trips
   const categories = [
@@ -68,22 +97,39 @@ const ProtectedPage = () => {
         <div className=" bg-green-50 min-h-screen flex flex-col">
           <nav className="bg-green-600 p-2">
             <div className="container mx-auto flex justify-between items-center">
+              <Link href="/">
               <div className="flex items-center space-x-4">
                 <Image src="/images/logo.jpg" alt="Logo" width={50} height={50} />
-                <span className="text-white text-xl">Live Tounsi</span>
-               
+                <span className="text-white text-xl font-bold">Live Tounsi</span>
               </div>
+              </Link>
               <div className="text-white flex flex-row gap-2">
               <button className="bg-green-700 text-white px-4 py-2 rounded-full text-sm">
                   Apply as Guide
                 </button>
-                <Link href="/dashboard/profile">
-                <div className="w-10 h-10 bg-green-700 rounded-full flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-                </Link>
+                <div className="relative" ref={menuRef}>
+                    <button 
+                      onClick={() => setIsOpen(!isOpen)} 
+                      className="w-10 h-10 bg-green-700 rounded-full flex items-center justify-center"
+                    >
+                      <FaUser className="w-6 h-6 text-white" />
+                    </button>
+
+                    {isOpen && (
+                      <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+                        <Link href="/dashboard/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          Profile
+                        </Link>
+                        <button 
+                        onClick={LogOut}
+                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          <FaSignOutAlt className="inline mr-2" />
+                          Logout
+                        </button>
+                      </div>
+                    )}
+                  </div>
                
               </div>
             </div>

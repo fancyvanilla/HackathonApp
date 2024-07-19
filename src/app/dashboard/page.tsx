@@ -3,26 +3,42 @@ import { withAuth } from '@/components/authentification/withAuth';
 import Head from 'next/head'
 import Image from 'next/image'
 import Card from '@/components/ui/Card';
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import { motion } from 'framer-motion';
 import GuideCard from '@/components/ui/GuideCard';
 import Link from 'next/link'
+import { subscribeToCollection } from '@/lib/firebase/firebaseControllers';
 
 const ProtectedPage = () => {
 
+
+
+  useEffect(() => {
+    const unsubscribe = subscribeToCollection('trips', (data) => {
+      setExperiences(data);
+    });
+  
+    // Cleanup function
+    return () => unsubscribe();
+  }, []);
+
+
     const [activeCategory, setActiveCategory] = useState('All')
     const [activeTab, setActiveTab] = useState('Experiences')
+    const [experiences, setExperiences] = useState([])
 
-
+//TODO: we need to add the attribute category to trips
   const categories = [
     'All', 'Camping', 'Sahara', 'Beach', 'City Tours', 'Historical', 'Cultural', 'Adventure', 'Food & Drink'
   ]
  
   //mock data
-    const experiences = [
+    /**const experiences = [
         { id: 1, imageUrl: "/images/sahara.jpg", title: "Sahara Desert Tour", description: "Experience the beauty of the Sahara desert with our expert guides.", price: 199 },
         { id: 2, imageUrl: "/images/tunis-city.jpg", title: "Tunis City Tour", description: "Explore the rich history and culture of Tunis with a local guide.", price: 49 },
-      ]
+      ]**/
+
+     //TODO: we need another collection for guides for more information(speciality and stuff)
       const guides = [
         { id: 1, name: "Ahmed Ben Ali", specialty: "Historical Tours", place: "Tunis", imageUrl: "/images/user.jpg" },
         { id: 2, name: "Fatima Zahr", specialty: "Culinary Experiences", place: "Sfax", imageUrl: "/images/woman2.jpg" },
@@ -50,12 +66,7 @@ const ProtectedPage = () => {
     return (
 
         <div className=" bg-green-50 min-h-screen flex flex-col">
-          <Head>
-            <title>Tunisian Tourist Guides</title>
-            <link rel="icon" href="/favicon.ico" />
-          </Head>
-    
-          <nav className="bg-green-600 p-4">
+          <nav className="bg-green-600 p-2">
             <div className="container mx-auto flex justify-between items-center">
               <div className="flex items-center space-x-4">
                 <Image src="/images/logo.jpg" alt="Logo" width={50} height={50} />
@@ -78,7 +89,7 @@ const ProtectedPage = () => {
             </div>
           </nav>
           <div className='flex container mx-auto gap-6 items-center justify-center pt-4'>
-        {['Experiences', 'Guides'].map((tab) => (
+        {['Experiences', 'Guides','NFT Marketplace'].map((tab) => (
           <div
             key={tab}
             className={`pb-2 px-4 cursor-pointer transition duration-300 ${
@@ -138,7 +149,7 @@ const ProtectedPage = () => {
               <Card
                 key={experience.id}
                 id={experience.id}
-                imageUrl={experience.imageUrl}
+                imageUrl={"/images/sahara.jpg"} 
                 title={experience.title}
                 description={experience.description}
                 price={experience.price}

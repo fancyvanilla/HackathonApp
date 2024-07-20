@@ -9,6 +9,8 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
 import { useLoading } from "@/components/loading/loadingProvider"
+import Image from 'next/image';
+import { FaArrowLeft } from 'react-icons/fa';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -38,18 +40,32 @@ export default function Login() {
     };
 
 return (
-    <Box className="flex w-full h-screen justify-center items-center bg-green-50"
+    <Box className="flex w-full h-screen justify-center items-center bg-green-50 "
     style={{
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       width: '100%',
       height: '100vh'
     }}>
-      <div className="flex h-full items-center justify-center max-w-5xl bg-white shadow-md">
-        <div className="w-full md:w-1/2 p-8 space-y-6">
+      <div className="flex h-full items-center justify-center max-w-5xl bg-white shadow-md relative">
+
+      <div className="absolute top-10 left-6">
+          <button 
+            onClick={() => router.push("/")} 
+            className="flex items-center text-green-900 hover:text-green-900 transition-colors"
+          >
+            <FaArrowLeft className="mr-2" />
+            <span>Go Back</span>
+          </button>
+        </div>
+
+      {/**<div className="absolute top-0 left-0">
+          <Image alt="logo" src="/images/logo.jpg" width={60} height={60}/>
+        </div>**/}
+        <div className="w-full md:w-1/2 p-8 space-y-6 relative ">
           <div className="flex flex-col items-start">
-            <Typography variant="h4" className="text-3xl font-bold">
-              Sign in to your account
+            <Typography variant="h4" className="text-2xl font-extrabold text-green-700">
+              Welcome back
             </Typography>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">

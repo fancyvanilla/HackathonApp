@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const register = () => {
   const [username, setUserName] = useState('');
@@ -50,12 +51,20 @@ const register = () => {
       width: '100%',
       height: '100vh'
         }}>
-      <div className="flex h-full items-center justify-center max-w-5xl bg-white shadow-md">
-            
+      <div className="flex h-full items-center justify-center max-w-5xl bg-white shadow-md relative ">
+      <div className="absolute top-10 left-6">
+          <button 
+            onClick={() => router.push("/")} 
+            className="flex items-center text-green-900 hover:text-green-900 transition-colors"
+          >
+            <FaArrowLeft className="mr-2" />
+            <span>Go Back</span>
+          </button>
+        </div>
         <div className="w-full md:w-1/2 p-8 space-y-6">
           <div className="flex flex-col items-start">
-            <Typography variant="h4" className="text-3xl font-bold">
-              Create your account
+            <Typography variant="h4" className="text-3xl font-extrabold text-green-700">
+              Welcome to Live Tounsi.
             </Typography>
           </div>
           <form onSubmit={handleRegister} className="space-y-4">

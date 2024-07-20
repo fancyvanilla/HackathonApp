@@ -38,15 +38,11 @@ export default function UserProfile() {
 
   return (
     <div className="bg-green-50 min-h-screen">
-      <Head>
-        <title>Profile - Tunisian Tourist Guides</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+     
       <nav className="bg-green-600 p-4">
         <div className="container mx-auto flex justify-between items-center">
           <Link href="/" className="text-white text-xl font-bold">
-            Tunisian Guides
+            Live Tounsi
           </Link>
           <Link href="/dashboard" className="text-white">
             Home

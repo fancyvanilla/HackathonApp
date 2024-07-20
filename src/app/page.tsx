@@ -117,7 +117,7 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer className="bg-green-600 text-white py-8">
+      {/**<footer className="bg-green-600 text-white py-8">
         <div className="container mx-auto px-6 text-center">
           <p>© 2024 Live Tounsi. All rights reserved.</p>
           <div className="mt-4">
@@ -125,7 +125,7 @@ export default function LandingPage() {
             <Link href="#" className="mx-2 hover:text-green-200">Terms of Service</Link>
           </div>
         </div>
-      </footer>
+      </footer>**/}
     </div>
   )
 }

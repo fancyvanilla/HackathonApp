@@ -5,12 +5,16 @@ import "./globals.css";
 import { AuthProvider } from '@/components/authentification/AuthContext';
 import { useRouter } from 'next/router';
 import { LoadingProvider } from "@/components/loading/loadingProvider";
+import Footer from '@/components/ui/Footer'
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Live Tounsi",
   description: "We help you connect with local guides.",
+  icons: {
+    icon: '/images/logo.jpg',
+  },
 };
 
 export default function RootLayout({
@@ -25,6 +29,7 @@ export default function RootLayout({
       <LoadingProvider>
       <AppRouterCacheProvider>
         {children}
+        <Footer/>
       </AppRouterCacheProvider>
       </LoadingProvider>
         </body>

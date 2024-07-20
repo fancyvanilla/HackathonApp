@@ -35,6 +35,8 @@ const register = () => {
       .then(res => {
         alert("Registration done");
         setError("");
+        setTimeout(()=>{},50)
+        router.push("/dashboard")
       })
       .catch(err => {
         setError("Internal Error");

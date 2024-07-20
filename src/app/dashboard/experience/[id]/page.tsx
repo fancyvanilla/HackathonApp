@@ -1,4 +1,4 @@
-import { getDocumentById } from '@/lib/firebase/firebaseControllers'
+import { getDocumentById,getMultipleDocuments } from '@/lib/firebase/firebaseControllers'
 import { useLoading } from "@/components/loading/loadingProvider"
 import Experience from '@/components/ui/Experience'
 
@@ -42,21 +42,28 @@ function convertToPlainObject(obj) {
   return obj;
 }
 
-
-
 export default async function ExperienceDetails({ params }: { params: { id: string } }) {
   const { id } = params
 
   try {
     let experience = await getDocumentById("trips", id)
     experience = convertToPlainObject(experience);
-    console.log(experience)
 
     if (!experience) {
       return <div>Experience not found!</div>
     }
 
-    return <Experience experience={experience} />
+    // Fetch guides in a single batch request
+    const guidesIds = experience?.guides || []
+    let guides = []
+    if (guidesIds.length > 0) {
+      guides = await getMultipleDocuments("users", guidesIds)
+      guides = guides
+        .filter(guide => guide.role === "guide")
+        .map(convertToPlainObject)
+    }
+
+    return <Experience experience={experience} guides={guides} />
   } catch (error) {
     console.error('Failed to fetch experience:', error)
     return <div>Failed to load experience. Please try again later.</div>

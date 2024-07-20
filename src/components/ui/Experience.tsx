@@ -8,7 +8,7 @@ import Paypal from '@/components/payement/paypal'
 import CustomMarkerIcon from './CustomMarkerIcon'
 
 
-const Experience = ({experience}) => {
+const Experience = ({experience,guides}) => {
   return (
     <div className="min-h-screen bg-green-50">
       <nav className="bg-green-600 p-4">
@@ -33,19 +33,19 @@ const Experience = ({experience}) => {
                 </div>
                 
                 {/* Commented out guides section */}
-                {/*
+                
                 <div className="bg-gray-100 rounded-lg p-4 mb-4">
                   <h2 className='text-xl font-bold mb-2 text-gray-800'>Meet Your Guides</h2>
                   <div className="flex flex-col space-y-4">
-                    {experience.guides.map((guide) => (
+                    {guides.map((guide) => (
                       <div key={guide.id} className="flex flex-row items-center space-x-4 bg-white p-3 rounded-lg shadow-sm">
-                        <Image src={guide.avatar} alt={guide.username} width={60} height={60} className="rounded-full" />
+                        <Image src={"/images/man2.jpg"} alt={guide.username} width={60} height={60} className="rounded-full" />
                         <h3 className="font-semibold text-md text-gray-700">{guide.username}</h3>
                       </div>
                     ))}
                   </div>
                 </div>
-                */}
+                
               </div>
 
               {/* Right column: Map and Booking */}
@@ -74,7 +74,7 @@ const Experience = ({experience}) => {
                   </p>
                   
                   <p className="text-sm text-gray-700 mb-4">
-                    Secure your spot now! Only 5 places left for {new Date(experience?.date).toLocaleDateString()}.
+                    Secure your spot now! Only {experience.capacity} places left for {new Date(experience?.date).toLocaleDateString()}.
                   </p>
                   <Paypal price={`${experience?.price}`} currency="USD" />
                   

@@ -10,38 +10,50 @@ import Link from 'next/link'
 import { subscribeToCollection } from '@/lib/firebase/firebaseControllers';
 import { FaUser, FaSignOutAlt } from 'react-icons/fa';
 import { useAuth } from '@/components/authentification/AuthContext';
+import ExperienceSkeletonCard from '@/components/ui/ExperienceSkeletonCard'
+import GuideSkeletonCard from '@/components/ui/GuideSkeletonCard';
+
 
 
 const ProtectedPage = () => {
 
+    useEffect(() => {
+      setLoading(true);
+      
+      const unsubscribeExperiences = subscribeToCollection('trips', (data) => {
+        setExperiences(data);
+      });
 
-  useEffect(() => {
-    const unsubscribe = subscribeToCollection('trips', (data) => {
-      setExperiences(data);
-    });
-  
-    // Cleanup function
-    return () => unsubscribe();
-  }, []);
+      const unsubscribeGuides = subscribeToCollection('users', (data) => {
+        const validGuides = data.filter(guide => guide.role === "guide");
+        setGuides(validGuides);
+      });
 
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setIsOpen(false);
+      // Function to handle clicks outside the menu
+      function handleClickOutside(event) {
+        if (menuRef.current && !menuRef.current.contains(event.target)) {
+          setIsOpen(false);
+        }
       }
-    }
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+      document.addEventListener("mousedown", handleClickOutside);
+
+      // Set loading to false after a short delay to ensure data has been fetched
+      const loadingTimer = setTimeout(() => setLoading(false), 1000);
+
+      // Cleanup function
+      return () => {
+        unsubscribeExperiences();
+        unsubscribeGuides();
+        document.removeEventListener("mousedown", handleClickOutside);
+        clearTimeout(loadingTimer);
+      };
+    }, []);
+
 
 
   const LogOut=async()=>{
     try{
-
     await logout();
     }
     catch(err) {
@@ -53,6 +65,9 @@ const ProtectedPage = () => {
     const [activeTab, setActiveTab] = useState('Experiences')
     const [experiences, setExperiences] = useState([])
     const [isOpen, setIsOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [guides, setGuides] = useState([])
+
     const menuRef = useRef(null);
     const {logout} = useAuth()
 
@@ -68,12 +83,12 @@ const ProtectedPage = () => {
       ]**/
 
      //TODO: we need another collection for guides for more information(speciality and stuff)
-      const guides = [
+      /**const guides = [
         { id: 1, name: "Ahmed Ben Ali", specialty: "Historical Tours", place: "Tunis", imageUrl: "/images/user.jpg" },
         { id: 2, name: "Fatima Zahr", specialty: "Culinary Experiences", place: "Sfax", imageUrl: "/images/woman2.jpg" },
         { id: 3, name: "Youssef Mansour", specialty: "Desert Adventures", place: "Tozeur", imageUrl: "/images/man2.jpg" },
         { id: 4, name: "Leila Bouazizi", specialty: "Cultural Immersion", place: "Kairouan", imageUrl: "/images/woman.jpg" },
-      ];
+      ];**/
 
       const containerVariants = {
         hidden: { opacity: 0 },
@@ -91,7 +106,7 @@ const ProtectedPage = () => {
           opacity: 1
         }
       };
-      
+  
     return (
 
         <div className=" bg-green-50 min-h-screen flex flex-col">
@@ -212,10 +227,10 @@ const ProtectedPage = () => {
             {guides.map((guide) => (
               <motion.div key={guide.id} variants={itemVariants}>
                 <GuideCard
-                  name={guide.name}
-                  specialty={guide.specialty}
-                  place={guide.place}
-                  imageUrl={guide.imageUrl}
+                  name={guide.username}
+                  specialty={"Cultural Immersion"}
+                  place={"Tunsia,Tunis"}
+                  imageUrl={"/images/woman2.jpg"}
                 />
               </motion.div>
             ))}

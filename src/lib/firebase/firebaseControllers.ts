@@ -3,7 +3,7 @@ import db from '@/lib/firebase/firestore'
 
 
 
-//real time update
+//real time documents update
 export const subscribeToCollection = (collectionName: string, callback: (data: any[]) => void) => {
   const collectionRef = collection(db, collectionName);
   return onSnapshot(collectionRef, (querySnapshot) => {
@@ -33,15 +33,24 @@ export const getDocuments = async (coll:string) => {
   }
   }
 
+  export async function getMultipleDocuments(collectionName, ids) {
+    const q = query(collection(db, collectionName), where('__name__', 'in', ids))
+    const querySnapshot = await getDocs(q)
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+  }
+
 //get a user or trip by id
   export const getDocumentById = async(collection:string,id:string)=>{
     try{
     const ref=doc(db,collection,id);
     const snap = await getDoc(ref);
     if (snap.exists()){
-      return snap.data
+      return snap.data()
     }
-    else return null;
+    else {
+      console.log("doesnt exist")
+      return null;
+    }
   }
   catch(error){
     console.error(`Error getting document(${collection}) by ID: `, error)

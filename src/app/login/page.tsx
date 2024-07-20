@@ -37,65 +37,88 @@ export default function Login() {
         }
     };
 
-    return(
-        <Box className='flex w-full h-screen justify-center items-start pt-[15vh]' 
-        style={{backgroundImage: `url("/images/sahara.jpg")`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            width: '100%',
-            height: '100vh'
-        }}
-        >
-            <form onSubmit={handleLogin} className='flex flex-col gap-4 items-start p-8 inset-0 bg-white bg-opacity-90 shadow-md w-96 rounded-lg '>
-                <Typography variant="h5" className=' text-blue-950'>
-                    Sign In
-                </Typography>
-                <TextField
-                    id="outlined-basic" 
-                    label="email" 
-                    variant="standard"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    fullWidth
-                    className='rounded-md'
-                    required
+return (
+    <Box className="flex w-full h-screen justify-center items-center bg-green-50"
+    style={{
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      width: '100%',
+      height: '100vh'
+    }}>
+      <div className="flex h-full items-center justify-center max-w-5xl bg-white shadow-md">
+        <div className="w-full md:w-1/2 p-8 space-y-6">
+          <div className="flex flex-col items-start">
+            <Typography variant="h4" className="text-3xl font-bold">
+              Sign in to your account
+            </Typography>
+          </div>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <TextField
+              id="email"
+              label="Email"
+              variant="standard"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              fullWidth
+              className="rounded-md"
+              required
+            />
+            <TextField
+              id="password"
+              label="Password"
+              variant="standard"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              fullWidth
+              className="rounded-md"
+              required
+            />
+            {error && <Typography color="error">{error}</Typography>}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <input
+                  id="remember_me"
+                  name="remember_me"
+                  type="checkbox"
+                  className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
                 />
-                <TextField
-                   id="outlined-basic" 
-                   label="password" 
-                   variant="standard"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    fullWidth
-                    className='rounded-md'
-                    required
-                />
-                {error && <Typography color="error">{error}</Typography>}
-                <Button 
-                    variant="contained"
-                    type="submit"
-                    fullWidth
-                    sx={{
-                        backgroundColor: 'green',
-                        '&:hover': {
-                          backgroundColor: 'darkgreen',
-                        },
-                      }}
-                >
-                    Sign In
-                </Button>
-                <Typography className=' text-blue-950 mt-4'>
-                    Don't have an account?{' '}
-                    <Link 
-                        href="/register"
-                        className='text-blue-400 hover:underline'
-                    >
-                        Sign Up
-                    </Link>
-                </Typography>
-            </form>
-        </Box>
-    )
+                <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-900">
+                  Remember me
+                </label>
+              </div>
+              <div className="text-sm">
+                <a href="#" className="font-medium text-green-600 hover:text-green-500">
+                  Forgot your password?
+                </a>
+              </div>
+            </div>
+            <Button
+              variant="contained"
+              type="submit"
+              fullWidth
+              sx={{
+                backgroundColor: 'green',
+                '&:hover': {
+                  backgroundColor: 'darkgreen',
+                },
+              }}
+            >
+              Sign In
+            </Button>
+            <Typography className="text-blue-950 mt-4">
+              Don't have an account?{' '}
+              <Link href="/register" className="text-green-400 hover:underline">
+                Sign Up
+              </Link>
+            </Typography>
+          </form>
+        </div>
+        <div className="w-full md:w-1/2 h-full hidden md:block">
+          <img className="object-cover w-full h-full" src="/images/img.jpg" alt="monument" />
+        </div>
+      </div>
+    </Box>
+  );
 }

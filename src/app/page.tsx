@@ -45,7 +45,7 @@ export default function LandingPage() {
           ) : (
             <>
               <Link href="/login" className="text-gray-700 hover:text-green-600">Sign In</Link>
-              <Link href="/signup" className="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition duration-300">
+              <Link href="/register" className="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition duration-300">
                 Sign Up
               </Link>
             </>
@@ -56,7 +56,7 @@ export default function LandingPage() {
 
       <main>
       <section className="h-screen relative overflow-hidden">
-          <ThreeJSAnimation />
+      <ThreeJSAnimation />
           <div className="absolute inset-0 flex items-center justify-center text-center bg-black bg-opacity-50">
             <div>
               <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white">Discover Authentic Tunisian Experiences</h1>
@@ -129,3 +129,7 @@ export default function LandingPage() {
     </div>
   )
 }
+/* <video className="w-full max-w-3xl" autoPlay loop muted>
+          <source src="video/mobile.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+          </video> */

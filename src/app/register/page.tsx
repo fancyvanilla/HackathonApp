@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
 import { FaArrowLeft } from 'react-icons/fa';
 
+
 const register = () => {
   const [username, setUserName] = useState('');
   const [email, setEmail] = useState('');
@@ -18,6 +19,7 @@ const register = () => {
   const [error, setError] = useState('');
   const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(firebaseAuth);
   const db = getFirestore();
+  const router=useRouter()
   
   const handleRegister = async (e) => {
     e.preventDefault();

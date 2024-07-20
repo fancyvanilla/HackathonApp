@@ -7,7 +7,8 @@ import { FaLocationDot } from "react-icons/fa6";
 import { useState } from "react";
 import { FaQrcode } from "react-icons/fa";
 
-export default function UserProfile() {
+export default function UserProfile({user}) {
+  /** 
   const user = {
     name: "John Doe",
     email: "john@example.com",
@@ -18,8 +19,11 @@ export default function UserProfile() {
     wallet: "0x1234...5678",
     balance: "500 APT",
     role: "user",
-  };
+  };**/
 
+
+
+  //TODO:to be fetched from aptos
   const bookedExperiences = [
     {
       id: 1,
@@ -70,13 +74,13 @@ export default function UserProfile() {
               <div className="flex flex-col items-center mb-6">
                 <Image
                   src={"/images/user.jpg"}
-                  alt={user.name}
+                  alt={user.username}
                   width={120}
                   height={120}
                   className="rounded-full mb-4"
                 />
                 <h1 className="text-2xl font-bold text-gray-700">
-                  {user.name}
+                  {user.username}
                 </h1>
                 <p className="text-gray-600">{user.email}</p>
                 <div className="mt-2 flex items-center text-green-600">
@@ -97,7 +101,7 @@ export default function UserProfile() {
                   ></div>
                 </div>
                 <p className="text-sm text-gray-600">
-                  Level {user.level} • {user.xp} XP
+                  Level {"5"} • {"1250"} XP
                 </p>
               </div>
 
@@ -105,8 +109,8 @@ export default function UserProfile() {
                 <h2 className="text-xl font-semibold mb-2 flex items-center text-gray-700">
                   <FaWallet className="mr-2 text-blue-500" />
                 </h2>
-                <p className="text-sm text-gray-600 mb-1">{user.wallet}</p>
-                <p className="font-semibold">{user.balance}</p>
+                <p className="text-sm text-gray-600 mb-1">{"0x1234...5678"}</p>
+                <p className="font-semibold">{"1250 APT"}</p>
               </div>
             </div>
           </div>

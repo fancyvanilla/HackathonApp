@@ -69,7 +69,8 @@ const ProtectedPage = () => {
     const [guides, setGuides] = useState([])
 
     const menuRef = useRef(null);
-    const {logout} = useAuth()
+    const {user,logout} = useAuth()
+    console.log(user)
 
 //TODO: we need to add the attribute category to trips
   const categories = [
@@ -132,7 +133,7 @@ const ProtectedPage = () => {
 
                     {isOpen && (
                       <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
-                        <Link href="/dashboard/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <Link href={`/dashboard/profile/${user.uid}`} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                           Profile
                         </Link>
                         <button 

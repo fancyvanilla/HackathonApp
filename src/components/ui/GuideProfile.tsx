@@ -3,8 +3,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { FaWallet, FaMedal, FaUserTie, FaLanguage, FaMapMarkedAlt, FaHiking, FaCalendarAlt, FaEnvelope,FaStar,FaCalendarCheck } from 'react-icons/fa'
 
-export default function Profile() {
-  const user = {
+export default function Profile({user}) {
+  /**const user = {
     name: "John Doe",
     email: "john@example.com",
     avatar: "/user-avatar.jpg",
@@ -16,7 +16,7 @@ export default function Profile() {
     languages: ["English", "Arabic", "French"],
     regions: ["Sahara", "Tunis", "Sidi Bou Said"],
     specialties: ["Hiking", "Camping", "Historical Tours"],
-  }
+  }**/
 
   const plannedTrips = [
     { id: 1, title: "Sahara Desert Expedition", date: "2024-08-15", status: "Upcoming" },
@@ -53,8 +53,8 @@ export default function Profile() {
           <div className="md:col-span-1">
             <div className="bg-white rounded-lg shadow-md p-6">
               <div className="flex flex-col items-center mb-6">
-                <Image src={"/images/user.jpg"} alt={user.name} width={120} height={120} className="rounded-full mb-4" />
-                <h1 className="text-2xl font-bold text-gray-700">{user.name}</h1>
+                <Image src={"/images/user.jpg"} alt={user.username} width={120} height={120} className="rounded-full mb-4" />
+                <h1 className="text-2xl font-bold text-gray-700">{user.username}</h1>
                 <p className="text-gray-600">{user.email}</p>
                 {user.isGuide && (
                   <div className="mt-2 flex items-center text-green-600">
@@ -72,7 +72,7 @@ export default function Profile() {
                 <div className="bg-gray-200 rounded-full h-4 mb-2">
                   <div className="bg-green-500 rounded-full h-4" style={{width: `${(user.xp % 1000) / 10}%`}}></div>
                 </div>
-                <p className="text-sm text-gray-600">Level {user.level} • {user.xp} XP</p>
+                <p className="text-sm text-gray-600">Level {"5"} • {"1250"} XP</p>
               </div>
 
               <div className="mb-6">
@@ -81,7 +81,7 @@ export default function Profile() {
                   Languages
                 </h2>
                 <div className="flex flex-wrap gap-2">
-                  {user.languages.map((lang, index) => (
+                  {["English", "Arabic", "French"].map((lang, index) => (
                     <span key={index} className="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-sm">
                       {lang}
                     </span>
@@ -95,7 +95,7 @@ export default function Profile() {
                   Regions
                 </h2>
                 <div className="flex flex-wrap gap-2">
-                  {user.regions.map((region, index) => (
+                  { ["Sahara", "Tunis", "Sidi Bou Said"].map((region, index) => (
                     <span key={index} className="bg-red-100 text-red-800 px-2 py-1 rounded-full text-sm">
                       {region}
                     </span>
@@ -109,7 +109,7 @@ export default function Profile() {
                   Specialties
                 </h2>
                 <div className="flex flex-wrap gap-2">
-                  {user.specialties.map((specialty, index) => (
+                  {["Hiking", "Camping", "Historical Tours"].map((specialty, index) => (
                     <span key={index} className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
                       {specialty}
                     </span>

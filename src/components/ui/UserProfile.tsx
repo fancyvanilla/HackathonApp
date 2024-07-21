@@ -5,24 +5,17 @@ import Image from "next/image";
 import { FaWallet, FaMedal, FaUserTie } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { useState,useEffect } from "react";
-import { FaQrcode } from "react-icons/fa";
 import usePetra from "../petra/usePetra";
-import { connect } from "http2";
-import {getAccountBalance} from "@/lib/aptos/aptos"
+import NFTSection from "./NFTSection";
 
-export default function UserProfile({user}) {
-  /** 
-  const user = {
-    name: "John Doe",
-    email: "john@example.com",
-    avatar: "/user-avatar.jpg",
-    xp: 1250,
-    level: 5,
-    isGuide: true,
-    wallet: "0x1234...5678",
-    balance: "500 APT",
-    role: "user",
-  };**/
+
+interface User{
+  username:string
+  email:string
+  addresses: string[]
+}
+
+export default function UserProfile({user}:{user:User}) {
 
   const {
     account,
@@ -36,7 +29,6 @@ export default function UserProfile({user}) {
     isCancelled
   } = usePetra();
   
-
   //TODO:to be fetched from aptos
   const bookedExperiences = [
     {
@@ -59,13 +51,12 @@ export default function UserProfile({user}) {
     },
   ];
 
+// fetch nfts by address
   const achievements = [
-    { id: 1, name: "Desert Explorer", icon: "🏜️" },
-    { id: 2, name: "City Connoisseur", icon: "🏙️" },
-    { id: 3, name: "Cultural Enthusiast", icon: "🏛️" },
+    { id: 1, name: "Desert Explorer", icon: "🏜️", address: "0x1234...5678" },
+    { id: 2, name: "City Connoisseur", icon: "🏙️", address: "0x5678...9012" },
+    { id: 3, name: "Cultural Enthusiast", icon: "🏛️", address: "0x9012...3456" },
   ];
-
-  const [selectedNFT, setSelectedNFT] = useState(null);
 
   return (
     <div className="bg-green-50 min-h-screen">
@@ -80,7 +71,6 @@ export default function UserProfile({user}) {
           </Link>
         </div>
       </nav>
-
       <main className="container mx-auto mt-8 px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-1">
@@ -195,47 +185,7 @@ export default function UserProfile({user}) {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-4 text-black">NFTs</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                {achievements.map((achievement) => (
-                  <div key={achievement.id} className="relative">
-                    <Link href={`/nft/${achievement.id}`}>
-                      <div className="border rounded-lg p-4 text-center cursor-pointer hover:bg-gray-100 transition-colors">
-                        <span className="text-3xl mb-2">
-                          {achievement.icon}
-                        </span>
-                        <h3 className="font-semibold text-gray-700">
-                          {achievement.name}
-                        </h3>
-                      </div>
-                    </Link>
-                    <button
-                      onClick={() => setSelectedNFT(achievement.id)}
-                      className="absolute top-2 right-2 bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition-colors"
-                    >
-                      <FaQrcode />
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-              {selectedNFT && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                  <div className="bg-white p-6 rounded-lg max-w-sm w-full">
-                    <p className="text-black">SCAN</p>
-                    <div className="mt-4 flex justify-end space-x-2">
-                      <button
-                        onClick={() => setSelectedNFT(null)}
-                        className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
-                      >
-                        close
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+           <NFTSection achievements={achievements} addresses={user.addresses}/>
           </div>
         </div>
       </main>

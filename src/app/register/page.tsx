@@ -134,7 +134,7 @@ const Register = () => {
         </div>
       </div>
     </Box>
-    <Suspense/>
+    </Suspense>
   );
 
 }

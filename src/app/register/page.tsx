@@ -10,7 +10,6 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
 import { FaArrowLeft } from 'react-icons/fa';
-import Suspense from 'react'
 
 const Register = () => {
   const [username, setUserName] = useState('');

@@ -3,7 +3,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import LoadingWrapper from "@/components/loading/loadingWrapper";
-
 const LoadingContext = createContext(null);
 
 function LoadingProviderInner({ children }) {

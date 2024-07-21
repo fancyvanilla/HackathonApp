@@ -8,10 +8,6 @@ const nextConfig = {
   },
   reactStrictMode: true,
   swcMinify: true,
-  experimental: {
-    // Enable React Server Components
-    appDir: true,
-  },
 };
 
-module.exports = nextConfig;
+export default nextConfig;

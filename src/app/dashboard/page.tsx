@@ -12,6 +12,7 @@ import { FaUser, FaSignOutAlt } from 'react-icons/fa';
 import { useAuth } from '@/components/authentification/AuthContext';
 import ExperienceSkeletonCard from '@/components/ui/ExperienceSkeletonCard'
 import GuideSkeletonCard from '@/components/ui/GuideSkeletonCard';
+import { useRouter } from 'next/navigation';
 
 
 
@@ -67,6 +68,7 @@ const ProtectedPage = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [guides, setGuides] = useState([])
+    const router=useRouter()
 
     const menuRef = useRef(null);
     const {user,logout} = useAuth()
@@ -120,7 +122,7 @@ const ProtectedPage = () => {
               </div>
               </Link>
               <div className="text-white flex flex-row gap-2">
-              <button className="bg-green-700 text-white px-4 py-2 rounded-full text-sm">
+              <button className="bg-green-700 text-white px-4 py-2 rounded-full text-sm" onClick={()=>router.push("https://docs.google.com/forms/d/e/1FAIpQLSeaY_fe72T0s8IjRxh9yDkczT-GR7gRHAh7ocSQdQ52u7bZpg/viewform?usp=sf_link")}>
                   Apply as Guide
                 </button>
                 <div className="relative" ref={menuRef}>

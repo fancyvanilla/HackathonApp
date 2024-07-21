@@ -2,27 +2,6 @@ import { getDocumentById,getMultipleDocuments } from '@/lib/firebase/firebaseCon
 import { useLoading } from "@/components/loading/loadingProvider"
 import Experience from '@/components/ui/Experience'
 
-
-/**const experiences = [
-  {
-    id: "0rrWIItwx8ZQFi1Bfm5u",
-    imageUrl: "/images/sahara.jpg",
-    title: "Sahara Desert Tour",
-    description: "Embark on an unforgettable journey through the golden dunes of the Sahara. Our expert guides will lead you on a 3-day adventure, where you'll ride camels, sleep under the stars, and explore ancient oases.",
-    price: 199,
-    city: "Douz",
-    geoPoint: [33.4667, 9.0167],
-    date: "2024-08-15",
-    capacity: 12,
-    includes: ["Camel ride", "Camping equipment", "Meals", "Local guide"],
-    meetingPoint: "Douz, Tunisia",
-    guides:[
-      {id:"0",username:"Farhat",email:"farhat@gmail.com",role:"Lead Guide",avatar:"/images/user.jpg",},
-      {id:"1",username:"Nouha",email:"oussema@gmail.com",role:"Assistant Guide",avatar:"/images/woman2.jpg",},
-    ]
-  },
-]**/
-
 function convertToPlainObject(obj) {
   if (obj && typeof obj === 'object') {
     if (obj.toDate instanceof Function) {

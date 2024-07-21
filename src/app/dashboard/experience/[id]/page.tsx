@@ -13,6 +13,12 @@ interface FirestoreGeoPoint {
   _long: number;
 }
 
+interface User {
+  id: string;
+  role?: string;
+  username?: string;
+  email?: string;
+}
 type FirestoreData = string | number | boolean | FirestoreTimestamp | FirestoreGeoPoint | { [key: string]: FirestoreData } | FirestoreData[];
 
 
@@ -47,9 +53,9 @@ export default async function ExperienceDetails({ params }: { params: { id: stri
 
     // Fetch guides in a single batch request
     const guidesIds = experience?.guides || []
-    let guides = []
+    let guides : User[]= []
     if (guidesIds.length > 0) {
-      guides = await getMultipleDocuments("users", guidesIds)
+      guides = await getMultipleDocuments<User>("users", guidesIds)
       guides = guides
         .filter(guide => guide.role === "guide")
         .map(convertToPlainObject)

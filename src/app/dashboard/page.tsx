@@ -9,7 +9,9 @@ import Link from 'next/link'
 import { subscribeToCollection } from '@/lib/firebase/firebaseControllers';
 import { useAuth } from '@/components/authentification/AuthContext';
 import { useRouter } from 'next/navigation';
-import {FaSignOutAlt, FaBell, FaSearch, FaUser, FaCalendar, FaPaintBrush } from 'react-icons/fa';
+import {FaSignOutAlt, FaBell, FaSearch, FaUser, FaCalendar, FaPaintBrush,FaPlus } from 'react-icons/fa';
+import NFTCard from '@/components/ui/NFTCard';
+import { Suspense } from 'react';
 
 
 const ProtectedPage = () => {
@@ -29,6 +31,15 @@ const ProtectedPage = () => {
   const menuRef = useRef(null);
   const notificationRef = useRef(null);
   const {user, logout} = useAuth()
+
+//mock nft data
+  const [nfts, setNfts] = useState([
+    { id: 1, name: "Cosmic Harmony", artist: "StarDust", imageUrl: "/images/nfts/nft1.jpg", price: "0.5" },
+    { id: 2, name: "Digital Dreams", artist: "PixelMaster", imageUrl: "/images/nfts/nft2.jpg", price: "0.8" },
+    { id: 3, name: "Neon Nostalgia", artist: "RetroWave", imageUrl: "/images/nfts/nft3.jpg", price: "0.3" },
+    { id: 4, name: "Abstract Thoughts", artist: "MindScape", imageUrl: "/images/nfts/nft4.png", price: "1.2" },
+  ]);
+
 
 //for dynamic search
   const getPlaceholder = () => {
@@ -128,6 +139,8 @@ const ProtectedPage = () => {
   };
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
+
     <div className="bg-gray-50 min-h-screen flex flex-col">
 
         <nav className="bg-white border-b border-gray-200 py-4 px-6 fixed w-full top-0 z-50">
@@ -283,7 +296,7 @@ const ProtectedPage = () => {
                 />
               ))}
             </div>
-          ) : (
+          ) : activeTab === 'Guides' ? (
             <motion.div 
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
               variants={containerVariants}
@@ -301,9 +314,26 @@ const ProtectedPage = () => {
                 </motion.div>
               ))}
             </motion.div>
+          ): (
+            <div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-6">NFT Marketplace</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {nfts.map((nft) => (
+                  <NFTCard
+                    key={nft.id}
+                    name={nft.name}
+                    artist={nft.artist}
+                    imageUrl={nft.imageUrl}
+                    price={nft.price}
+                  />
+                ))}
+              </div>
+            </div>
           )}
         </main>
     </div>
+    </Suspense>
+
   )
 };
 

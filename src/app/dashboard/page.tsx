@@ -7,9 +7,10 @@ import { motion } from 'framer-motion';
 import GuideCard from '@/components/ui/GuideCard';
 import Link from 'next/link'
 import { subscribeToCollection } from '@/lib/firebase/firebaseControllers';
-import { FaUser, FaSignOutAlt, FaBell } from 'react-icons/fa';
 import { useAuth } from '@/components/authentification/AuthContext';
 import { useRouter } from 'next/navigation';
+import {FaSignOutAlt, FaBell, FaSearch, FaUser, FaCalendar, FaPaintBrush } from 'react-icons/fa';
+
 
 const ProtectedPage = () => {
   const [activeCategory, setActiveCategory] = useState('All')
@@ -19,6 +20,8 @@ const ProtectedPage = () => {
   const [loading, setLoading] = useState(true);
   const [guides, setGuides] = useState([])
   const [showNotifications, setShowNotifications] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+
   //this needs to be stored on user session and gets updated when a new notif comes
   const [seenNotifications, setSeenNotifications]=useState(false);
   const router = useRouter()
@@ -26,6 +29,33 @@ const ProtectedPage = () => {
   const menuRef = useRef(null);
   const notificationRef = useRef(null);
   const {user, logout} = useAuth()
+
+//for dynamic search
+  const getPlaceholder = () => {
+    switch(activeTab) {
+      case 'Experiences':
+        return 'Search for experiences...';
+      case 'Guides':
+        return 'Find a guide...';
+      case 'NFT Marketplace':
+        return 'Search for NFTs...';
+      default:
+        return 'Search...';
+    }
+  };
+
+  const getIcon = () => {
+    switch(activeTab) {
+      case 'Experiences':
+        return <FaSearch />;
+      case 'Guides':
+        return <FaUser />;
+      case 'NFT Marketplace':
+        return <FaPaintBrush />;
+      default:
+        return <FaSearch />;
+    }
+  }
 
   // Static array of notifications
   const notifications = [
@@ -167,42 +197,45 @@ const ProtectedPage = () => {
             </div>
           </div>
         </nav>
-
-          <div className='flex container mx-auto gap-6 items-center justify-center pt-6 pb-2'>
-          {['Experiences', 'Guides', 'NFT Marketplace'].map((tab) => (
-            <button
-              key={tab}
-              className={`px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                activeTab === tab
-                  ? 'text-gray-900 border-b-2 border-gray-900'
-                  : 'text-gray-500 hover:text-gray-700'
-              }`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-
-        <main className="container mx-auto mt-10 px-4 flex-grow pb-16 max-w-7xl">
-          <div className="bg-white p-8 rounded-lg shadow-sm mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-6">Discover Experiences</h1>
-            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+            <div className='flex container mx-auto gap-6 items-center justify-center pt-6 pb-2'>
+            {['Experiences', 'Guides', 'NFT Marketplace'].map((tab) => (
+              <button
+                key={tab}
+                className={`px-4 py-2 text-sm font-medium transition-colors duration-200 ${
+                  activeTab === tab
+                    ? 'text-gray-900 border-b-2 border-gray-900'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+              <div className="container mx-auto px-4 mt-4">
+            <div className="bg-white p-4 rounded-lg shadow-md flex items-center space-x-4">
+              <div className="text-gray-400">
+                {getIcon()}
+              </div>
               <input
                 type="text"
-                placeholder="Where do you want to go?"
-                className="flex-grow p-3 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder={getPlaceholder()}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="flex-grow p-2 outline-none text-gray-700"
               />
-              <input
-                type="date"
-                className="p-3 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+              {activeTab === 'Experiences' && (
+                <input
+                  type="date"
+                  className="p-2 border-l border-gray-200 text-gray-700 focus:outline-none"
+                />
+              )}
+              <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">
                 Search
               </button>
             </div>
           </div>
-
+        <main className="container mx-auto mt-10 px-4 flex-grow pb-16 max-w-7xl">
           <div className="mb-8">
             <div className="flex flex-wrap gap-2">
               {categories.map((category) => (

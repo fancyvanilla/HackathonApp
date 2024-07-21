@@ -30,7 +30,7 @@ const ThreeJSAnimation = () => {
       renderer.render(scene, camera)
     }
 
-    // Use let for animationId so it can be reassigned
+    // using let for animationId so it can be reassigned
     let animationId;
 
     const animationLoop = () => {

@@ -33,10 +33,13 @@ export const getDocuments = async (coll:string) => {
   }
   }
 
-  export async function getMultipleDocuments(collectionName, ids) {
+  export async function getMultipleDocuments<T extends { id: string }>(
+    collectionName: string, 
+    ids: string[]
+  ): Promise<T[]> {
     const q = query(collection(db, collectionName), where('__name__', 'in', ids))
     const querySnapshot = await getDocs(q)
-    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as T))
   }
 
 //get a user or trip by id

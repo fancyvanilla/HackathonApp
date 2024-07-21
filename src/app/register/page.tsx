@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 import { FaArrowLeft } from 'react-icons/fa';
 
 
-const register = () => {
+const Register = () => {
   const [username, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -136,7 +136,7 @@ const register = () => {
 
 }
 
-export default register;
+export default Register;
 
 
 

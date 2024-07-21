@@ -4,8 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaWallet, FaMedal, FaUserTie } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { FaQrcode } from "react-icons/fa";
+import usePetra from "../petra/usePetra";
+import { connect } from "http2";
+import {getAccountBalance} from "@/lib/aptos/aptos"
 
 export default function UserProfile({user}) {
   /** 
@@ -21,7 +24,18 @@ export default function UserProfile({user}) {
     role: "user",
   };**/
 
-
+  const {
+    account,
+    wallet,
+    connectWallet,
+    disconnectWallet,
+    loading,
+    error,
+    isInstalled,
+    isConnected,
+    isCancelled
+  } = usePetra();
+  
 
   //TODO:to be fetched from aptos
   const bookedExperiences = [
@@ -105,12 +119,45 @@ export default function UserProfile({user}) {
                 </p>
               </div>
 
-              <div>
+              <div className=" text-gray-700">
                 <h2 className="text-xl font-semibold mb-2 flex items-center text-gray-700">
                   <FaWallet className="mr-2 text-blue-500" />
                 </h2>
-                <p className="text-sm text-gray-600 mb-1">{"0x1234...5678"}</p>
-                <p className="font-semibold">{"1250 APT"}</p>
+                    {!isInstalled ? (
+                      <p className="text-sm text-red-500">Petra wallet is not installed</p>
+                    ) : loading ? (
+                      <p className="text-sm text-gray-600">Loading...</p>
+                    ) : isCancelled? (
+                      <button 
+                        onClick={connectWallet}
+                        className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-300"
+                      >
+                        Connect Wallet
+                      </button>
+                    )
+                    :error? (
+                      <p className="text-sm text-red-500">{error}</p>
+                    ) : isConnected ? (
+                      <>
+                        <p className="text-sm text-gray-600 mb-1">
+                          {account?.address ? `${account.address.slice(0, 6)}...${account.address.slice(-4)}` : 'Address not available'}
+                        </p>
+                        <p className="font-semibold text-green-600">{/* Display balance here */}</p>
+                        <button 
+                          onClick={disconnectWallet}
+                          className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-300"
+                        >
+                          Disconnect
+                        </button>
+                      </>
+                    ) : (
+                      <button 
+                        onClick={connectWallet}
+                        className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-300"
+                      >
+                        Connect Wallet
+                      </button>
+                    )}
               </div>
             </div>
           </div>

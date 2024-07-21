@@ -1,0 +1,16 @@
+[package]
+name = "hackApp"
+version = "1.0.0"
+authors = []
+
+[addresses]
+hackAppAddr='243efa7bf0ad63c415bb3f0da9984c4ba60016bcae3faff0489ea084117afa80'
+
+[dev-addresses]
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "mainnet"
+subdir = "aptos-move/framework/aptos-framework"
+
+[dev-dependencies]

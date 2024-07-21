@@ -12,6 +12,7 @@ import { useLoading } from "@/components/loading/loadingProvider"
 import Image from 'next/image';
 import { FaArrowLeft } from 'react-icons/fa';
 import NextLink from 'next/link';
+import { Suspense } from 'react';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -40,6 +41,8 @@ export default function Login() {
     };
 
 return (
+  <Suspense fallback={<div>Loading...</div>}>
+
     <Box className="flex w-full h-screen justify-center items-center bg-green-50 "
     style={{
       backgroundSize: 'cover',
@@ -142,5 +145,6 @@ return (
         </div>
       </div>
     </Box>
+    </Suspense>
   );
 }

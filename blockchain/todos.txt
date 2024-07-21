@@ -1,0 +1,8 @@
+so we need to custmoer the metadata for each nft ticket
+
+  //take input from  event and/or user
+  //Upload the JSON files to IPFS to get the unique URIs for each metadata file.
+  //use the uri in my move code when creating the nft
+
+
+  usefule link: https://github.com/aptos-labs/aptos-core/blob/main/aptos-move/move-examples/mint_nft/1-Create-NFT/sources/create_nft.move

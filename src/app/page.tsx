@@ -25,48 +25,47 @@ export default function LandingPage() {
         <title>Live Tounsi - Authentic Tunisian Experiences</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <nav className="bg-white shadow-md">
-      <div className=" py-3 flex justify-between items-center ">
-        <Link href="/" className="flex items-center px-12">
-          <Image src="/images/logo.jpg" alt="Live Tounsi Logo" width={40} height={40} className="mr-2" />
-          <span className="font-bold text-xl text-green-600">Live Tounsi</span>
+<nav className="bg-white shadow-md fixed top-0 left-0 right-0 z-10">
+  <div className="container mx-auto py-3 flex justify-between items-center">
+    <Link href="/" className="flex items-center px-4 md:px-12">
+      <Image src="/images/logo.jpg" alt="Live Tounsi Logo" width={40} height={40} className="mr-2" />
+      <span className="font-bold text-xl text-green-600">Live Tounsi</span>
+    </Link>
+    <div className="hidden md:flex items-center space-x-6 px-4 md:px-10">
+      <Link href="#experiences" className="text-gray-700 hover:text-green-600">Experiences</Link>
+      <Link href="#about" className="text-gray-700 hover:text-green-600">About</Link>
+      <Link href="#contact" className="text-gray-700 hover:text-green-600">Contact</Link>
+      {loading ? (
+        <div className="w-6 h-6 animate-spin rounded-full border-2 border-green-500 border-t-transparent"></div>
+      ) : user ? (
+        <Link href="/dashboard" className="text-gray-700 hover:text-green-600">
+          <FaRegUserCircle className="h-6 w-6" />
         </Link>
-        <div className="hidden md:flex items-center space-x-6 px-10">
-          <Link href="#experiences" className="text-gray-700 hover:text-green-600">Experiences</Link>
-          <Link href="#about" className="text-gray-700 hover:text-green-600">About</Link>
-          <Link href="#contact" className="text-gray-700 hover:text-green-600">Contact</Link>
-          {loading ? (
-            <div className="w-6 h-6 animate-spin rounded-full border-2 border-green-500 border-t-transparent"></div>
-          ) : user ? (
-            <Link href="/dashboard" className="text-gray-700 hover:text-green-600">
-              <FaRegUserCircle className="h-6 w-6" />
-            </Link>
-          ) : (
-            <>
-              <Link href="/login" className="text-gray-700 hover:text-green-600">Sign In</Link>
-              <Link href="/register" className="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition duration-300">
-                Sign Up
-              </Link>
-            </>
-          )}
-        </div>
-      </div>
-    </nav>
+      ) : (
+        <>
+          <Link href="/login" className="text-gray-700 hover:text-green-600">Sign In</Link>
+          <Link href="/register" className="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition duration-300">
+            Sign Up
+          </Link>
+        </>
+      )}
+    </div>
+  </div>
+</nav>
 
       <main>
-      <section className="h-screen relative overflow-hidden">
+          <section className="h-screen relative overflow-hidden pt-16">
       <ThreeJSAnimation />
-          <div className="absolute inset-0 flex items-center justify-center text-center bg-black bg-opacity-50">
-            <div>
-              <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white">Discover Authentic Tunisian Experiences</h1>
-              <p className="text-xl mb-8 text-white">Powered by blockchain technology</p>
-              <Link href="#experiences" className="bg-green-500 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-green-600 transition duration-300">
-                Explore Experiences
-              </Link>
-            </div>
-          </div>
-      </section>
+      <div className="absolute inset-0 flex items-center justify-center text-center bg-black bg-opacity-50">
+        <div>
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white">Discover Authentic Tunisian Experiences</h1>
+          <p className="text-xl mb-8 text-white">Powered by blockchain technology</p>
+          <Link href="#experiences" className="bg-green-500 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-green-600 transition duration-300">
+            Explore Experiences
+          </Link>
+        </div>
+      </div>
+    </section>
 
         <section id="experiences" className="bg-white py-16">
           <div className="container mx-auto px-6">

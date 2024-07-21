@@ -139,8 +139,6 @@ const ProtectedPage = () => {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-
     <div className="bg-gray-50 min-h-screen flex flex-col">
 
         <nav className="bg-white border-b border-gray-200 py-4 px-6 fixed w-full top-0 z-50">
@@ -332,8 +330,6 @@ const ProtectedPage = () => {
           )}
         </main>
     </div>
-    </Suspense>
-
   )
 };
 

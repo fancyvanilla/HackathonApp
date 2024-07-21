@@ -1,14 +1,12 @@
-// app/components/LoadingProvider.js
 'use client';
 
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import LoadingWrapper from "@/components/loading/loadingWrapper";
 
-
 const LoadingContext = createContext(null);
 
-export const LoadingProvider = ({ children }) => {
+function LoadingProviderInner({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -28,6 +26,14 @@ export const LoadingProvider = ({ children }) => {
       </LoadingWrapper>
     </LoadingContext.Provider>
   );
-};
+}
+
+export function LoadingProvider({ children }) {
+  return (
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <LoadingProviderInner>{children}</LoadingProviderInner>
+    </React.Suspense>
+  );
+}
 
 export const useLoading = () => useContext(LoadingContext);

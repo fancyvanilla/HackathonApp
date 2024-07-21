@@ -41,8 +41,6 @@ export default function Login() {
     };
 
 return (
-  <Suspense fallback={<div>Loading...</div>}>
-
     <Box className="flex w-full h-screen justify-center items-center bg-green-50 "
     style={{
       backgroundSize: 'cover',
@@ -145,6 +143,5 @@ return (
         </div>
       </div>
     </Box>
-    </Suspense>
   );
 }

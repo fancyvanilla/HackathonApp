@@ -2,7 +2,21 @@ import { getDocumentById,getMultipleDocuments } from '@/lib/firebase/firebaseCon
 import { useLoading } from "@/components/loading/loadingProvider"
 import Experience from '@/components/ui/Experience'
 
-function convertToPlainObject(obj) {
+//TODO: fix types
+
+interface FirestoreTimestamp {
+  toDate: () => Date;
+}
+
+interface FirestoreGeoPoint {
+  _lat: number;
+  _long: number;
+}
+
+type FirestoreData = string | number | boolean | FirestoreTimestamp | FirestoreGeoPoint | { [key: string]: FirestoreData } | FirestoreData[];
+
+
+function convertToPlainObject(obj: any): any {
   if (obj && typeof obj === 'object') {
     if (obj.toDate instanceof Function) {
       // Convert Firestore Timestamp to ISO string
@@ -13,14 +27,13 @@ function convertToPlainObject(obj) {
       return { lat: obj._lat, long: obj._long };
     }
     // Recursively convert nested objects and arrays
-    return Object.keys(obj).reduce((result, key) => {
+    return Object.keys(obj).reduce((result: any, key: string) => {
       result[key] = convertToPlainObject(obj[key]);
       return result;
     }, Array.isArray(obj) ? [] : {});
   }
   return obj;
 }
-
 export default async function ExperienceDetails({ params }: { params: { id: string } }) {
   const { id } = params
 

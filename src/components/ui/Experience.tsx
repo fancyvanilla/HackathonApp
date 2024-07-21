@@ -1,18 +1,15 @@
 'use client'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import Paypal from '@/components/payement/paypal'
 import CustomMarkerIcon from './CustomMarkerIcon'
-import {useState,useEffect} from 'react'
 
-
-
-const Experience = ({experience,guides}) => {
-  const [isPetraInstalled,setIsPetraInstalled]=useState(false)
-  const [isLoaded,setIsLoaded]=useState(false)
+const Experience = ({experience, guides}) => {
+  const [isPetraInstalled, setIsPetraInstalled] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     const checkPetraWallet = async () => {
@@ -29,7 +26,7 @@ const Experience = ({experience,guides}) => {
       <div className={`min-h-screen bg-blue-950 flex flex-col items-center justify-center p-4 transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
         <h1 className="text-4xl font-bold mb-6 text-white animate-fade-in-down">One Last Step!</h1>
         <p className="text-xl mb-12 text-center max-w-2xl text-white animate-fade-in-up">
-          To complete your booking, please install the Petra wallet extension. It's quick, easy, and essential for your Tunisian adventure!
+          To complete your booking, please install the Petra wallet extension. It&apos;s quick, easy, and essential for your Tunisian adventure!
         </p>
         <div className="relative w-full max-w-2xl mb-12">
           <Image 
@@ -90,8 +87,6 @@ const Experience = ({experience,guides}) => {
                   <p className="text-gray-700 text-base leading-relaxed">{experience?.description}</p>
                 </div>
                 
-                {/* Commented out guides section */}
-                
                 <div className="bg-gray-100 rounded-lg p-4 mb-4">
                   <h2 className='text-xl font-bold mb-2 text-gray-800'>Meet Your Guides</h2>
                   <div className="flex flex-col space-y-4">
@@ -108,8 +103,6 @@ const Experience = ({experience,guides}) => {
 
               {/* Right column: Map and Booking */}
               <div className="md:w-2/5 flex flex-col">
-                {/* Commented out map section */}
-                {/*  */}
                 {experience &&
                   <div className="mb-4" style={{ height: '300px', width: '100%' }}>
                     <MapContainer center={[experience.geoPoint.lat, experience.geoPoint.long]} zoom={10} style={{ height: '100%', width: '100%' }}>
@@ -124,7 +117,6 @@ const Experience = ({experience,guides}) => {
                   </div>
                 }
                 
-
                 <div className="bg-green-50 p-6 rounded-lg shadow-md mt-4">
                   <h2 className="text-2xl font-bold mb-2 text-gray-800">Book This Experience</h2>
                   <p className="text-3xl text-green-600 font-bold mb-2">
@@ -135,7 +127,6 @@ const Experience = ({experience,guides}) => {
                     Secure your spot now! Only {experience.capacity} places left for {new Date(experience?.date).toLocaleDateString()}.
                   </p>
                   <Paypal price={`${experience?.price}`} currency="USD" />
-                  <button onClick={()=>setShowPetraPrompt(true)}>Book</button>
                   
                   <div className="mt-4 text-sm text-gray-700">
                     <p className="mb-1"><strong>Cancellation policy:</strong> Free cancellation up to 24 hours before the start of the experience.</p>

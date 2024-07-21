@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useLoading } from "@/components/loading/loadingProvider"
 import Image from 'next/image';
 import { FaArrowLeft } from 'react-icons/fa';
+import NextLink from 'next/link';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -33,7 +34,6 @@ export default function Login() {
                 router.push('/dashboard')
             }
             else setError('Email or password is incorrect');
-            //router.push('/dashboard'); // Redirect to dashboard after successful login
         } catch (error) {
             setError(error.message);
         }
@@ -105,9 +105,9 @@ return (
                 </label>
               </div>
               <div className="text-sm">
-                <a href="#" className="font-medium text-green-600 hover:text-green-500">
+                <NextLink href="#" className="font-medium text-green-600 hover:text-green-500">
                   Forgot your password?
-                </a>
+                </NextLink>
               </div>
             </div>
             <Button
@@ -124,7 +124,7 @@ return (
               Sign In
             </Button>
             <Typography className="text-blue-950 mt-4">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Link href="/register" className="text-green-400 hover:underline">
                 Sign Up
               </Link>
@@ -132,7 +132,13 @@ return (
           </form>
         </div>
         <div className="w-full md:w-1/2 h-full hidden md:block">
-          <img className="object-cover w-full h-full" src="/images/img.jpg" alt="monument" />
+          <Image 
+            className="object-cover w-full h-full" 
+            src="/images/img.jpg" 
+            alt="monument" 
+            width={500} 
+            height={500} 
+          />
         </div>
       </div>
     </Box>

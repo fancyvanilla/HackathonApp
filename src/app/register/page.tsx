@@ -10,7 +10,7 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
 import { FaArrowLeft } from 'react-icons/fa';
-
+import Suspense from 'react'
 
 const Register = () => {
   const [username, setUserName] = useState('');
@@ -48,6 +48,8 @@ const Register = () => {
   }
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
+
     <Box className="flex w-full h-screen justify-center items-center bg-green-50"
     style={{
       backgroundSize: 'cover',
@@ -132,6 +134,7 @@ const Register = () => {
         </div>
       </div>
     </Box>
+    <Suspense/>
   );
 
 }

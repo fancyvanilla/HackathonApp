@@ -12,7 +12,8 @@ import { useLoading } from "@/components/loading/loadingProvider"
 import Image from 'next/image';
 import { FaArrowLeft } from 'react-icons/fa';
 import NextLink from 'next/link';
-import { Suspense } from 'react';
+import { decrypt } from "@/lib/encryption/script";
+
 
 export default function Login() {
     const [email, setEmail] = useState('');

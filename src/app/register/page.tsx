@@ -10,6 +10,9 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
 import { FaArrowLeft } from 'react-icons/fa';
+import { createAccount } from '@/lib/aptos/aptos'
+import { create_pk,encrypt } from '@/lib/encryption/script'
+
 
 const Register = () => {
   const [username, setUserName] = useState('');
@@ -19,6 +22,19 @@ const Register = () => {
   const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(firebaseAuth);
   const db = getFirestore();
   const router=useRouter()
+
+
+  const createAptosAccount = async (password:string) =>{
+    const pk=create_pk()
+    const address=await createAccount(pk)
+    const enc_pk=await encrypt(pk,password)
+
+    return {
+      address: address,
+      enc_pk: enc_pk
+    }
+
+  }
   
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -27,23 +43,38 @@ const Register = () => {
       setUserName('');
       setEmail('');
       setPassword('');
+      try {
+      const { address,enc_pk } = await createAptosAccount(password)
+      console.log(address,enc_pk)
       setDoc(doc(db, "users", credentials.user.uid), {
         email: email,
-        username: username
+        username: username,
+        aptos_account:{
+        address: address,
+        enc_pk: enc_pk,
+        }
       })
       .then(res => {
         alert("Registration done");
         setError("");
         setTimeout(()=>{},50)
-        router.push("/dashboard")
+        router.push(`/register/thanks/${credentials.user.uid}`)
       })
       .catch(err => {
-        setError("Internal Error");
+        setError("Internal Error.Please try again later");
       });
-    } catch (error) {
-      setError("Email already in use!");
+    } 
+
+    catch (error) {
+      setError("Internal Error.Please try again later");
       console.error(error);
     }
+      }
+      catch(err){
+        setError("Email already in use!");
+        console.error(error);
+      }
+    
   }
 
   return (

@@ -280,21 +280,37 @@ const ProtectedPage = () => {
               </button>
             ))}
           </div>
-
-          {activeTab === 'Experiences' ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {experiences.map((experience) => (
+       
+      {activeTab === 'Experiences' ? (
+        <div>
+          <div className="mb-10 text-center">
+            <h2 className="text-3xl font-bold text-gray-800 mb-3">Tunisian Experiences</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Discover curated journeys and help shape future adventures in Tunisia.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {experiences.map((experience) => (
+              <div key={experience.id} className="transform transition duration-300 hover:scale-105">
                 <Card
-                  key={experience.id}
                   id={experience.id}
-                  imageUrl={"/images/sahara.jpg"} 
+                  imageUrl={"/images/sahara.jpg"}
                   title={experience.title}
                   description={experience.description}
                   price={experience.price}
+                  vote={experience.vote}
+                  date={experience.date}
                 />
-              ))}
+              </div>
+            ))}
+          </div>
+          {experiences.length === 0 && (
+            <div className="text-center text-gray-500 mt-10">
+              No experiences available at the moment. Check back soon!
             </div>
-          ) : activeTab === 'Guides' ? (
+          )}
+        </div>
+      ) : activeTab === 'Guides' ? (
             <motion.div 
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
               variants={containerVariants}

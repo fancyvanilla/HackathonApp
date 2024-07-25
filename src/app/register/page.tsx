@@ -46,7 +46,7 @@ const Register = () => {
       try {
       const { address,enc_pk } = await createAptosAccount(password)
       console.log(address,enc_pk)
-      setDoc(doc(db, "users", credentials.user.uid), {
+      await setDoc(doc(db, "users", credentials.user.uid), {
         email: email,
         username: username,
         aptos_account:{

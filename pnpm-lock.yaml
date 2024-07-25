@@ -35,6 +35,12 @@ importers:
       '@paypal/react-paypal-js':
         specifier: ^8.5.0
         version: 8.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      crypto:
+        specifier: ^1.0.1
+        version: 1.0.1
+      date-fns:
+        specifier: ^3.6.0
+        version: 3.6.0
       firebase:
         specifier: ^10.12.3
         version: 10.12.4
@@ -74,6 +80,9 @@ importers:
       react-leaflet:
         specifier: ^4.2.1
         version: 4.2.1(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-toastify:
+        specifier: ^10.0.5
+        version: 10.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tailwind:
         specifier: ^4.0.0
         version: 4.0.0
@@ -2285,6 +2294,10 @@ packages:
   crypto2@2.0.0:
     resolution: {integrity: sha512-jdXdAgdILldLOF53md25FiQ6ybj2kUFTiRjs7msKTUoZrzgT/M1FPX5dYGJjbbwFls+RJIiZxNTC02DE/8y0ZQ==}
 
+  crypto@1.0.1:
+    resolution: {integrity: sha512-VxBKmeNcqQdiUQUW2Tzq0t377b54N2bMtXO/qiLa+6eRRmmC4qT3D4OnTGoT/U6O9aklQ/jTwbOtRMTTY8G0Ig==}
+    deprecated: This package is no longer supported. It's now a built-in Node module. If you've depended on crypto, you should switch to the one that's built-in.
+
   css-jss@10.10.0:
     resolution: {integrity: sha512-YyMIS/LsSKEGXEaVJdjonWe18p4vXLo8CMA4FrW/kcaEyqdIGKCFXao31gbJddXEdIxSXFFURWrenBJPlKTgAA==}
 
@@ -2316,6 +2329,9 @@ packages:
 
   datasette@1.0.1:
     resolution: {integrity: sha512-aJdlCBToEJUP4M57r67r4V6tltwGKa3qetnjpBtXYIlqbX9tM9jsoDMxb4xd9AGjpp3282oHRmqI5Z8TVAU0Mg==}
+
+  date-fns@3.6.0:
+    resolution: {integrity: sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==}
 
   debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -3865,6 +3881,12 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
+
+  react-toastify@10.0.5:
+    resolution: {integrity: sha512-mNKt2jBXJg4O7pSdbNUfDdTsK9FIdikfsIE/yUCxbAEXl4HMyJaivrVFcn3Elvt5xvCQYhUZm+hqTIu1UXM3Pw==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
 
   react-transition-group@4.4.5:
     resolution: {integrity: sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==}
@@ -7799,6 +7821,8 @@ snapshots:
       node-rsa: 0.4.2
       util.promisify: 1.0.0
 
+  crypto@1.0.1: {}
+
   css-jss@10.10.0:
     dependencies:
       '@babel/runtime': 7.24.8
@@ -7839,6 +7863,8 @@ snapshots:
       comparejs: 1.0.0
       eventemitter2: 5.0.1
       lodash: 4.17.5
+
+  date-fns@3.6.0: {}
 
   debug@2.6.9:
     dependencies:
@@ -9723,6 +9749,12 @@ snapshots:
       use-latest: 1.2.1(@types/react@18.3.3)(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
+
+  react-toastify@10.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      clsx: 2.1.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   react-transition-group@4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:

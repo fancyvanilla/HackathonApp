@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 
-
 //test account
 //email: sb-wst4m31793114@personal.example.com
 //password: X^3O_6ia
@@ -41,6 +40,7 @@ function Paypal({price, currency}) {
           }}
           createOrder={async () => {
             try {
+              setPayementStatus(true);
               const response = await fetch("/api/orders", {
                 method: "POST",
                 headers: {

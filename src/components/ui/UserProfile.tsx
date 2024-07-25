@@ -1,34 +1,39 @@
 "use client";
-import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { FaWallet, FaMedal, FaUserTie } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { useState,useEffect } from "react";
-import usePetra from "../petra/usePetra";
 import NFTSection from "./NFTSection";
+import { getAccountBalance,createAccount } from "@/lib/aptos/aptos";
 
 
 interface User{
   username:string
   email:string
   addresses: string[]
+  aptos_account:{
+    address:string 
+    enc_pk:string
+  }
 }
+
 
 export default function UserProfile({user}:{user:User}) {
 
-  const {
-    account,
-    wallet,
-    connectWallet,
-    disconnectWallet,
-    loading,
-    error,
-    isInstalled,
-    isConnected,
-    isCancelled
-  } = usePetra();
+  const [balance,setBalance]=useState("")
   
+
+  /**useEffect(()=>{
+    const dec_key=await decrypt(user.aptos_account.enc_key,)
+
+    const getBalance=async()=>{
+      const balance= await getAccountBalance()
+      setBalance(balance.toString())
+    }
+  
+  },[])**/
+
   //TODO:to be fetched from aptos
   const bookedExperiences = [
     {
@@ -57,6 +62,9 @@ export default function UserProfile({user}:{user:User}) {
     { id: 2, name: "City Connoisseur", icon: "🏙️", address: "0x5678...9012" },
     { id: 3, name: "Cultural Enthusiast", icon: "🏛️", address: "0x9012...3456" },
   ];
+
+
+  const addresses=["123","234"]
 
   return (
     <div className="bg-green-50 min-h-screen">
@@ -113,41 +121,11 @@ export default function UserProfile({user}:{user:User}) {
                 <h2 className="text-xl font-semibold mb-2 flex items-center text-gray-700">
                   <FaWallet className="mr-2 text-blue-500" />
                 </h2>
-                    {!isInstalled ? (
-                      <p className="text-sm text-red-500">Petra wallet is not installed</p>
-                    ) : loading ? (
-                      <p className="text-sm text-gray-600">Loading...</p>
-                    ) : isCancelled? (
-                      <button 
-                        onClick={connectWallet}
-                        className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-300"
-                      >
-                        Connect Wallet
-                      </button>
-                    )
-                    :error? (
-                      <p className="text-sm text-red-500">{error}</p>
-                    ) : isConnected ? (
-                      <>
-                        <p className="text-sm text-gray-600 mb-1">
-                          {account?.address ? `${account.address.slice(0, 6)}...${account.address.slice(-4)}` : 'Address not available'}
+                <p className="text-sm text-gray-600 mb-1">
+                  {user?.aptos_account.address ? `${user?.aptos_account.address.slice(0, 6)}...${user?.aptos_account.address.slice(-4)}` : 'Address not available'}
                         </p>
-                        <p className="font-semibold text-green-600">{/* Display balance here */}</p>
-                        <button 
-                          onClick={disconnectWallet}
-                          className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-300"
-                        >
-                          Disconnect
-                        </button>
-                      </>
-                    ) : (
-                      <button 
-                        onClick={connectWallet}
-                        className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-300"
-                      >
-                        Connect Wallet
-                      </button>
-                    )}
+                <p className="font-semibold text-green-600">balance:{balance}</p>
+                    
               </div>
             </div>
           </div>
@@ -185,7 +163,7 @@ export default function UserProfile({user}:{user:User}) {
               </div>
             </div>
 
-           <NFTSection achievements={achievements} addresses={user.addresses}/>
+           <NFTSection achievements={achievements}/>
           </div>
         </div>
       </main>

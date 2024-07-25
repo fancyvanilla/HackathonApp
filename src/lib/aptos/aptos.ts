@@ -10,12 +10,14 @@ const config = new AptosConfig({ network: Network.DEVNET });
 const aptos = new Aptos(config);
 
 
-export async function createAptosAccount(){
-  const account: Account = Account.generate();
-  return (account.accountAddress.toString())
+export  async function createAccount(pk){
+  const account: Account = Account.generate(pk);
+  await fundAccount(account,1)
+  return account.accountAddress.toString()
+
 }
 
-export async function fundAccount(account: Account,amount: number){
+async function fundAccount(account: Account,amount: number){
   await aptos.fundAccount({
     accountAddress: account.accountAddress,
     amount: amount,
